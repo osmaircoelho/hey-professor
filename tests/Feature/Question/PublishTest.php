@@ -24,10 +24,10 @@ it('should be able to publish a question', function () {
         ->draft->toBeFalse();
 });
 
-it('should make sure that only the person who has created can publish the question', function(){
+it('should make sure that only the person who has created can publish the question', function () {
     $rightUser = User::factory()->create();
     $wrongUser = User::factory()->create();
-    $question = Question::factory()->create(['draft' => true, 'created_by' => $rightUser->id]);
+    $question  = Question::factory()->create(['draft' => true, 'created_by' => $rightUser->id]);
 
     actingAs($wrongUser);
 
