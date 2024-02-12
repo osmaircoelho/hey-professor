@@ -13,7 +13,7 @@ show_progress() {
 # Função para exibir indicador de conclusão
 show_completion() {
     echo ""
-    echo "✅ $1 concluído."
+    echo ✅ $1 concluído.
     echo ""
 }
 
@@ -25,7 +25,9 @@ current_task=0
 
 # Rodar o phpstan
 show_progress $total_tasks $((++current_task))
-echo "⌛ Executando PHPStan..."
+
+echo ⌛ Executando PHPStan...
+
 ./vendor/bin/phpstan
 if [ $? -ne 0 ]; then
     echo ""
