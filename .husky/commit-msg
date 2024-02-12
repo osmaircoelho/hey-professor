@@ -8,8 +8,11 @@ show_progress() {
     local progress=$((current_step * 100 / total_steps))
     local bar_length=$((progress / 2))
 
+    # Limpa a linha anterior
+    printf "\r"
+
     # Adiciona barras de progresso e porcentagem
-    printf "\r[%-${bar_length}s] %d%%" "$(< /dev/zero tr '\0' ' ' | head -c $bar_length)" "$progress"
+    printf "[%-${bar_length}s] %d%%" "|$(printf '=%.0s' $(seq 1 $bar_length))" "$progress"
 }
 
 # Função para exibir indicador de conclusão
