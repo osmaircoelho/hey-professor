@@ -18,7 +18,7 @@ spinner & SPINNER_PID=$!
 # Rodar o phpstan
 ./vendor/bin/phpstan
 if [ $? -ne 0 ]; then
-    echo "Opa! Deu ruim aqui com PHPSTAN. Arrume antes de continuar... 😉";
+    echo Opa! Deu ruim aqui com PHPSTAN. Arrume antes de continuar... 😉;
     kill $SPINNER_PID
     exit 1;
 fi;
@@ -26,7 +26,7 @@ fi;
 # rodar os testes
 php artisan test --parallel | php
 if [ $? -ne 0 ]; then
-    echo "Opa! Deu ruim aqui com algum teste. Arrume antes de continuar... 😉";
+    echo Opa! Deu ruim aqui com algum teste. Arrume antes de continuar... 😉;
     kill $SPINNER_PID
     exit 1;
 fi;
