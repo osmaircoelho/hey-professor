@@ -12,7 +12,7 @@ class QuestionController extends Controller
     public function index(): View
     {
         return view('question.index', [
-            'questions' => user()->questions,
+            'questions' => user()->questions->sortByDesc('id'),
         ]);
     }
 
@@ -35,7 +35,7 @@ class QuestionController extends Controller
         $question->question = request()->question;
         $question->save();
 
-        return back();
+        return to_route('question.index');
     }
 
     public function edit(Question $question): View
