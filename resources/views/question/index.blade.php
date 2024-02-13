@@ -10,7 +10,7 @@
         <x-form :action="route('question.store')">
             <x-textarea label="Question" name="question" />
 
-            <x-btn.primary >Save</x-btn.primary>
+            <x-btn.primary>Save</x-btn.primary>
             <x-btn.reset>Cancel</x-btn.reset>
 
         </x-form>
@@ -26,12 +26,15 @@
             <x-table>
                 <x-table.thead>
                     <tr>
+                        <x-table.th>#</x-table.th>
                         <x-table.th>Question</x-table.th>
                         <x-table.th>Actions</x-table.th>
                     </tr>
+                </x-table.thead>
                     <tbody>
                     @foreach($questions->where('draft', true) as $question)
                         <x-table.tr>
+                            <x-table.td> {{ $question->id }}</x-table.td>
                             <x-table.td> {{ $question->question }}</x-table.td>
                             <x-table.td>
                                 <x-form :action="route('question.destroy', $question)" delete >
@@ -41,11 +44,14 @@
                                 <x-form :action="route('question.publish', $question)" put >
                                     <button type="submit" class="hover:underline text-blue-500">Publish</button>
                                 </x-form>
+
+                                <a href="{{ route('question.edit', $question) }}" class="hover:underline text-blue-500">Edit</a>
+
+
                             </x-table.td>
                         </x-table.tr>
                     @endforeach
                     </tbody>
-                </x-table.thead>
             </x-table>
         </div>
 
