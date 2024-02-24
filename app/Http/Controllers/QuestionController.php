@@ -16,6 +16,15 @@ class QuestionController extends Controller
         ]);
     }
 
+    public function archive(Question $question): RedirectResponse
+    {
+        $this->authorize('archive', $question);
+
+        $question->delete();
+
+        return back();
+    }
+
     public function update(Question $question): RedirectResponse
     {
         $this->authorize('update', $question);
@@ -49,7 +58,7 @@ class QuestionController extends Controller
     {
         $this->authorize('destroy', $question);
 
-        $question->delete();
+        $question->forceDelete();
 
         return back();
     }
