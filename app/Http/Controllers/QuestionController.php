@@ -12,8 +12,18 @@ class QuestionController extends Controller
     public function index(): View
     {
         return view('question.index', [
-            'questions' => user()->questions->sortByDesc('id'),
+            'questions'        => user()->questions->sortByDesc('id'),
+            'archiveQuestions' => user()->questions()->onlyTrashed()->get(),
         ]);
+    }
+
+    public function archive(Question $question): RedirectResponse
+    {
+        $this->authorize('archive', $question);
+
+        $question->delete();
+
+        return back();
     }
 
     public function update(Question $question): RedirectResponse
@@ -49,7 +59,7 @@ class QuestionController extends Controller
     {
         $this->authorize('destroy', $question);
 
-        $question->delete();
+        $question->forceDelete();
 
         return back();
     }
@@ -72,6 +82,15 @@ class QuestionController extends Controller
             'question' => request()->question,
             'draft'    => true,
         ]);
+
+        return back();
+    }
+
+    public function restore(int $id): RedirectResponse
+    {
+        $question = Question::withTrashed()->find($id);
+
+        $question->restore();
 
         return back();
     }
