@@ -29,6 +29,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::put('/publish/{question}', Question\PublishController::class)->name('publish');
         Route::put('/update/{question}', [QuestionController::class, 'update'])->name('update');
         Route::patch('/question/{question}', [QuestionController::class, 'archive'])->name('archive');
+        Route::patch('/question/{question}/restore', [QuestionController::class, 'restore'])->name('restore');
 
     });
     #endregion
