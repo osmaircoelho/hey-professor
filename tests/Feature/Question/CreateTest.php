@@ -2,9 +2,9 @@
 
 # ->todo() com este method podemos marcar como pendente
 
-use App\Models\User;
+use App\Models\{Question, User};
 
-use function Pest\Laravel\{actingAs, assertDatabaseCount, assertDatabaseHas, post};
+use function Pest\Laravel\{actingAs, assertDatabaseCount, assertDatabaseHas, post, postJson};
 
 it('should be able to create a new question bigger than 255 characters', function () {
     // AAA
@@ -71,8 +71,19 @@ it('should create as a draft all the time', function () {
     ]);
 });
 
-it('only authenticated users can create a new question', function () {
+test('only authenticated users can create a new question', function () {
     post(route('question.store'), [
         'question' => str_repeat('*', 8) . "?",
     ])->assertRedirect(route('login'));
+});
+
+test('question should be unique', function () {
+    $user = User::factory()->create();
+    actingAs($user);
+
+    Question::factory()->create(['question' => 'Any question?']);
+
+    post(route('question.store'), [
+        'question' => 'Any question?',
+    ])->assertSessionHasErrors(['question' => 'Question already exists!']);
 });
