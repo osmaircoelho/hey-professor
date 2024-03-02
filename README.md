@@ -52,5 +52,5 @@ For testing purposes, you can use the following credentials:
 
 - **Username:** test@example.com
 - **Password:** password
-- 
+
 This project is part of my studies and will be used to enhance my personal portfolio.
