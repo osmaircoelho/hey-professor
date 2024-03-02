@@ -50,20 +50,7 @@ The application is hosted on the domain [https://hey-professor.000webhost.com](h
 
 For testing purposes, you can use the following credentials:
 
-- **Username:** <span id="username">test@example.com</span> <button onclick="copyToClipboard('username')">Copy to Clipboard</button>
-- **Password:** <span id="password">password</span> <button onclick="copyToClipboard('password')">Copy to Clipboard</button>
-
-<script>
-  function copyToClipboard(elementId) {
-    var text = document.getElementById(elementId).innerText;
-    var tempInput = document.createElement("input");
-    tempInput.value = text;
-    document.body.appendChild(tempInput);
-    tempInput.select();
-    document.execCommand("copy");
-    document.body.removeChild(tempInput);
-    alert("Copied to clipboard: " + text);
-  }
-</script>
-
+- **Username:** test@example.com
+- **Password:** password
+- 
 This project is part of my studies and will be used to enhance my personal portfolio.
