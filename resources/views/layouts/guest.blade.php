@@ -13,12 +13,26 @@
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+        {{--custon styles--}}
+        <style>
+
+            body {
+                margin: 0;
+                padding: 0;
+                background-image: url({{asset('/img/bg_login.jpg')}});
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;
+            }
+        </style>
+
     </head>
     <body class="font-sans text-gray-900 antialiased">
-        <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100 dark:bg-gray-900">
+        <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 dark:bg-gray-900">
             <div>
                 <a href="/">
-                    <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
+                    <x-application-logo class="w-28 h-28 fill-current" />
                 </a>
             </div>
 

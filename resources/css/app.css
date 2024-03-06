@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/*!* Configuração do background *!
+body {
+    @apply min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-cover bg-center bg-no-repeat;
+    background-image: url('public/img/bg_login.jpg'); !* Substitua pelo caminho da sua imagem *!
+}*/
