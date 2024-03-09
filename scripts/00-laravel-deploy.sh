@@ -1,6 +1,11 @@
 #!/usr/bin/env bash
 echo "Running composer"
 composer global require hirak/prestissimo
+
+echo "Composer udpate..."
+composer update
+
+echo "Composer install..."
 composer install --no-dev --working-dir=/var/www/html
 
 echo "generating application key..."
