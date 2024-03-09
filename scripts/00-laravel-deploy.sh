@@ -12,8 +12,11 @@ php artisan config:cache
 echo "Caching routes..."
 php artisan route:cache
 
-echo "Running migrations and seed..."
-php artisan migrate:refresh --seed --force 
+echo "Running migrations..."
+php artisan migrate --force 
+
+echo "Running seed..."
+php artisan db:seed --force
 
 echo "Running vite..."
 npm install
@@ -53,4 +56,4 @@ install_and_build_with_cache() {
 
 install_and_build_with_cache
 
-echo "done deploying"
+echo "done deploying 🚀"
