@@ -1,4 +1,4 @@
-FROM richarvey/nginx-php-fpm:latest
+FROM richarvey/nginx-php-fpm:2.0.0
 
 COPY . .
 
@@ -18,6 +18,6 @@ ENV LOG_CHANNEL stderr
 ENV COMPOSER_ALLOW_SUPERUSER 1
 
 # Set the memory limit for PHP
-RUN echo "memory_limit = 256M" > /usr/local/etc/php/conf.d/docker-php-memlimit.ini
+RUN echo "memory_limit = 512M" > /usr/local/etc/php/conf.d/docker-php-memlimit.ini
 
 CMD ["/start.sh"]
