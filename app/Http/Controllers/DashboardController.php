@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Models\Question;
@@ -26,7 +27,8 @@ class DashboardController extends Controller
         $databaseDriver = \DB::connection()->getDriverName();
 
         if ($databaseDriver === 'pgsql') {
-            return 'COALESCE(votes_sum_like, 0) DESC, COALESCE(votes_sum_unlike, 0)';
+            return 'COALESCE((SELECT SUM(like) FROM votes WHERE questions.id = votes.question_id), 0) DESC, 
+                    COALESCE((SELECT SUM(unlike) FROM votes WHERE questions.id = votes.question_id), 0)';
         } else {
             // Assuming MySQL or other databases
             return 'CASE WHEN votes_sum_like IS NULL THEN 0 ELSE votes_sum_like END DESC,
