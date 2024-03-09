@@ -22,11 +22,6 @@ echo "Running vite..."
 npm install
 npm run build
 
-echo "max_execution_time = 300..."
-RUN echo "max_execution_time = 300" > /usr/local/etc/php/conf.d/docker-php-execution-time.ini
-
-# Ref: https://community.render.com/t/gatsby-build-caching-and-image-transformations/129/2
-
 restore_render_cache() {
   local source_cache_dir="$1"
   if [[ -d "$XDG_CACHE_HOME/$source_cache_dir" ]]; then
