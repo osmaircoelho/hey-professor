@@ -16,7 +16,7 @@ echo "Running migrations..."
 php artisan migrate --force 
 
 #echo "Running seed..."
-# php artisan db:seed --force
+php artisan db:seed --force
 
 echo "Running vite..."
 npm install
