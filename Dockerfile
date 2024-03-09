@@ -17,4 +17,7 @@ ENV LOG_CHANNEL stderr
 # Allow composer to run as root
 ENV COMPOSER_ALLOW_SUPERUSER 1
 
+# Set the memory limit for PHP
+RUN echo "memory_limit = 256M" > /usr/local/etc/php/conf.d/docker-php-memlimit.ini
+
 CMD ["/start.sh"]
