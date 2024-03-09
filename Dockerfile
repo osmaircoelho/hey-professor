@@ -1,5 +1,8 @@
 FROM richarvey/nginx-php-fpm:latest
 
+# Instalar o Node.js e npm
+RUN apk --no-cache add nodejs npm
+
 COPY . .
 
 # Image config
