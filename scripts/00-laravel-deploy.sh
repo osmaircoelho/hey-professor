@@ -17,11 +17,8 @@ php artisan config:cache
 echo "Caching routes..."
 php artisan route:cache
 
-echo "Running migrations..."
-php artisan migrate --force 
-
-#echo "Running seed..."
-php artisan:refresh db:seed --force
+echo "Running migrations and seeds..."
+php artisan migrate:refresh --seed --force 
 
 echo "Running vite..."
 npm install
