@@ -13,7 +13,7 @@ echo "Caching routes..."
 php artisan route:cache
 
 echo "Running migrations and seed..."
-php artisan migrate --seed --force 
+php artisan migrate:refresh --seed --force 
 
 echo "Running vite..."
 npm install
