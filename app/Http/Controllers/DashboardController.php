@@ -1,8 +1,8 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Models\Question;
+use App\Models\Vote;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -10,29 +10,31 @@ class DashboardController extends Controller
 {
     public function __invoke(): View
     {
-        $questions = Question::query()
+        // Obter o nome do driver do banco de dados
+        $driver = \DB::connection()->getDriverName();
+
+        // Construir a consulta com base no driver
+        $query = Question::query()
             ->when(request()->has('search'), function (Builder $query) {
                 $query->where('question', 'like', '%' . request()->search . '%');
             })
-            ->withSum('votes', 'like')
-            ->withSum('votes', 'unlike')
-            ->orderByRaw($this->getOrderByClause())
-            ->paginate(5);
+            ->leftJoin('votes', 'questions.id', '=', 'votes.question_id')
+            ->selectRaw('questions.*, SUM(votes.like) as votes_sum_like, SUM(votes.unlike) as votes_sum_unlike')
+            ->whereNull('questions.deleted_at')
+            ->groupBy('questions.id');
 
-        return view('dashboard', ['questions' => $questions]);
-    }
-
-    protected function getOrderByClause(): string
-    {
-        $databaseDriver = \DB::connection()->getDriverName();
-
-        if ($databaseDriver === 'pgsql') {
-            return 'COALESCE((SELECT SUM(like) FROM votes WHERE questions.id = votes.question_id), 0) DESC, 
-                    COALESCE((SELECT SUM(unlike) FROM votes WHERE questions.id = votes.question_id), 0)';
-        } else {
-            // Assuming MySQL or other databases
-            return 'CASE WHEN votes_sum_like IS NULL THEN 0 ELSE votes_sum_like END DESC,
-                    CASE WHEN votes_sum_unlike IS NULL THEN 0 ELSE votes_sum_unlike END';
+        // Ajustar a ordenação com base no driver
+        if ($driver == 'pgsql') {
+            $query->orderByRaw('COALESCE(SUM(votes.like), 0) DESC, COALESCE(SUM(votes.unlike), 0) DESC');
+        } elseif ($driver == 'mysql') {
+            $query->orderByDesc('votes_sum_like')
+                ->orderByDesc('votes_sum_unlike');
         }
+
+        // Paginar e passar os resultados para a visão
+        return view('dashboard', [
+            'questions' => $query->paginate(5),
+        ]);
+
     }
 }
