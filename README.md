@@ -33,7 +33,7 @@ Unit tests are a fundamental part of development. Hey Professor! uses the Pest t
 
 ## Hosting
 
-The application is hosted on the domain [https://hey-professor.000webhost.com](https://hey-professor.000webhost.com).
+The application is hosted on the domain https://hey-professor.onrender.com/
 
 ## Images
 
