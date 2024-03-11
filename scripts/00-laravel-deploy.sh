@@ -1,6 +1,11 @@
 #!/usr/bin/env bash
 echo "Running composer"
 composer global require hirak/prestissimo
+
+echo "Composer udpate..."
+composer update
+
+echo "Composer install..."
 composer install --no-dev --working-dir=/var/www/html
 
 echo "generating application key..."
@@ -12,17 +17,12 @@ php artisan config:cache
 echo "Caching routes..."
 php artisan route:cache
 
-echo "Running migrations..."
-php artisan migrate --force 
-
-echo "Running seed..."
-php artisan db:seed --force
+echo "Running migrations and seeds..."
+php artisan migrate:refresh --seed --force 
 
 echo "Running vite..."
 npm install
 npm run build
-
-# Ref: https://community.render.com/t/gatsby-build-caching-and-image-transformations/129/2
 
 restore_render_cache() {
   local source_cache_dir="$1"
