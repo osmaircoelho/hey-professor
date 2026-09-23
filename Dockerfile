@@ -26,4 +26,17 @@ RUN echo "memory_limit = 512M" > /usr/local/etc/php/conf.d/docker-php-memlimit.i
 
 RUN echo "max_execution_time = 300" > /usr/local/etc/php/conf.d/docker-php-execution-time.ini
 
+# ============================================================
+# CORREÇÃO DE PERMISSÕES DO STORAGE (Laravel)
+# ============================================================
+# Cria as pastas necessárias e ajusta o dono/permissão para
+# que o PHP-FPM (usuário www-data) consiga escrever em runtime.
+RUN mkdir -p /var/www/html/storage/framework/sessions \
+             /var/www/html/storage/framework/views \
+             /var/www/html/storage/framework/cache/data \
+             /var/www/html/storage/logs \
+             /var/www/html/bootstrap/cache \
+    && chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache \
+    && chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
+
 CMD ["/start.sh"]
