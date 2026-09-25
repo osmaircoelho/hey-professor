@@ -40,4 +40,6 @@ RUN rm -f bootstrap/cache/*.php
 COPY scripts/00-laravel-permissions.sh /scripts/00-laravel-permissions.sh
 RUN chmod +x /scripts/00-laravel-permissions.sh
 
+RUN mkdir -p storage/certs
+
 CMD ["/start.sh"]
