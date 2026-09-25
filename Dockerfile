@@ -13,35 +13,31 @@ ENV RUN_SCRIPTS 1
 ENV REAL_IP_HEADER 1
 
 # Laravel config
-ENV APP_ENV production
-ENV APP_DEBUG false
-ENV LOG_CHANNEL stderr
+ENV APP_ENV=production
+ENV APP_DEBUG=false
+ENV LOG_CHANNEL=stderr
+ENV LOG_LEVEL=error
 
 # Composer
 ENV COMPOSER_ALLOW_SUPERUSER 1
 
-# PHP
-RUN echo "memory_limit = 512M" > /usr/local/etc/php/conf.d/docker-php-memlimit.ini
-RUN echo "max_execution_time = 300" > /usr/local/etc/php/conf.d/docker-php-execution-time.ini
+# Limites do PHP
+RUN echo "memory_limit = 512M" > /usr/local/etc/php/conf.d/docker-php-memlimit.ini && \
+    echo "max_execution_time = 300" > /usr/local/etc/php/conf.d/docker-php-execution-time.ini
 
-# Permissões Laravel
+# Criar diretórios + ownership + permissões corretas
 RUN mkdir -p \
-    /var/www/html/storage/framework/sessions \
-    /var/www/html/storage/framework/views \
-    /var/www/html/storage/framework/cache/data \
-    /var/www/html/storage/logs \
-    /var/www/html/bootstrap/cache \
-    && chown -R www-data:www-data \
-        /var/www/html/storage \
-        /var/www/html/bootstrap/cache \
-    && chmod -R 775 \
-        /var/www/html/storage \
-        /var/www/html/bootstrap/cache
+        storage/framework/{sessions,views,cache/data} \
+        storage/logs \
+        bootstrap/cache \
+    && chown -R www-data:www-data storage bootstrap/cache \
+    && chmod -R 775 storage bootstrap/cache \
+    && chmod -R g+s storage bootstrap/cache   # setgid para novos arquivos herdarem o grupo
 
-# Remover configurações/cache antigos
-RUN rm -f /var/www/html/bootstrap/cache/config.php \
-          /var/www/html/bootstrap/cache/services.php \
-          /var/www/html/bootstrap/cache/packages.php \
-          /var/www/html/bootstrap/cache/routes-v7.php
+# Remover qualquer cache de config que possa forçar o canal de log errado
+RUN rm -f bootstrap/cache/*.php
+
+COPY scripts/00-laravel-permissions.sh /scripts/00-laravel-permissions.sh
+RUN chmod +x /scripts/00-laravel-permissions.sh
 
 CMD ["/start.sh"]
