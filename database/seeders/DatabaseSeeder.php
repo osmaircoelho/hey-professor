@@ -21,6 +21,14 @@ class DatabaseSeeder extends Seeder
 
         Question::factory()->count(10)->create();
 
+        // seeders das outras tabelas
+        $this->call([
+           QuestionSeeder::class,
+           VoteSeeder::class
+        ]);
+
+
+
         // \App\Models\User::factory(10)->create();
 
         // \App\Models\User::factory()->create([
