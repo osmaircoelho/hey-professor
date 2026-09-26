@@ -47,7 +47,7 @@
                        focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2
                        dark:focus:ring-offset-red-800 disabled:opacity-25 transition ease-in-out duration-150"
                     >
-                    Login <img alt='github' src="https://www.cdnlogo.com/logos/g/55/github.svg" class="w-6 p-0.5 text-white"> Github
+                    Login <img alt='github' src="{{ asset("img/github.svg")  }}" class="w-6 p-0.5 text-white"> Github
                 </a>
 
             <x-primary-button class="ms-1">
